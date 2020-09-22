@@ -1,0 +1,61 @@
+1. 
+"""""
+- Write an automated test script that:
+1. Opens a Chrome browser instance to the URL https://www.python.org/
+2. Navigates to Downloads -> All Releases
+3. Displays the most recent release (first one in the table)
+
+"""""
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+import time
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.get("http://www.python.org")
+assert "Python" in driver.title
+downloads_hover_over = driver.find_element_by_xpath(".//nav[@id='mainnav']//li[@id='downloads']")
+hover = ActionChains(driver).move_to_element(downloads_hover_over).perform()
+time.sleep(5)
+elem_all_releases=driver.find_element_by_xpath(".//nav[@id='mainnav']//li[@id='downloads']//ul[@class='subnav menu']//li[@class='tier-2 element-1']//a[@href='/downloads/']")
+#move=ActionChains(driver).move_to_element(elem_all_releases).click(elem_all_releases).perform()
+elem_all_releases.click()
+time.sleep(5)
+release_version=driver.find_element_by_xpath(".//div[@class='row download-list-widget']//ol[@class='list-row-container menu']//li[1]//span[@class='release-number']")
+print (release_version.text)
+driver.close()
+
+
+
+2. 
+
+"""
+- Write an automated test script that:
+1. Opens a Chrome browser instance to the URL https://www.python.org/
+2. In Search bar input 'decorator' and search
+3. Open first Results link
+4. Select from Contents 'Examples'
+5. Verify current example count is 5
+ """
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.get("http://www.python.org")
+assert "Python" in driver.title
+input = driver.find_element_by_xpath(".//div[@class='options-bar']//form[@class='search-the-site']//input[@name='q']")
+input.clear()
+input.send_keys("decorator")
+input.send_keys(Keys.RETURN)
+first_result= driver.find_element_by_xpath(".//div[@class='container']//ul[contains(@class, 'recent-events')]//li[1]//a")
+first_result.click()
+examples=driver.find_element_by_xpath(".//div[@class='contents topic']//ul[@class='simple']//li[10]//a[@class='reference internal']")
+examples.click()
+examples_count=driver.find_elements_by_xpath(".//div[@id='examples']//ol[@class='arabic']//li")
+print("Current example count is: {}".format(len(examples_count)))
+driver.close()
+
+
