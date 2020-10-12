@@ -1,0 +1,95 @@
+import requests
+
+base_url = 'https://official-joke-api.appspot.com'
+
+#1. For each endpoint write a method that retrieves the information.
+def get_random_joke():
+    response = requests.get(base_url + '/random_joke')
+    return response.json()
+
+def get_jokes():
+    response=requests.get(base_url + '/jokes/random')
+    return response.json()
+
+def get_ten():
+    response=requests.get(base_url + '/jokes/ten')
+    return response.json()
+
+def get_random_ten():
+    response=requests.get(base_url + '/random_ten')
+    return (response.json())
+
+def get_random_ten_by_type():
+    response = requests.get(base_url + '/jokes/programming/ten')
+    return response.json()
+
+
+
+#2. Format the output of the above mentioned methods in order to be more user friedly.
+def format_json(json_dict):
+    if isinstance(json_dict,list):
+        formatted_dict=[]
+        for joke in json_dict:
+            formatted_dict.append(str(json_dict.index(joke)) + '.'+ ' ' + joke['setup'] + '\n' + joke['punchline'] + '\n\n')
+        return formatted_dict
+
+
+def format_output_jokes(json_dict):
+    format_output = json_dict
+    return format_json(format_output)
+
+
+#3. Retrieve 10 random jokes by type and for each joke verify if the type is correct. If not, raise an error.
+
+
+def verify_jokes_type(expected_type):
+    random_ten= get_random_ten()
+    for joke in random_ten:
+        if joke['type'] != expected_type:
+            raise Exception('The type is not the correct one. {} Expected found {}'.format(expected_type, joke['type']))
+    return True
+
+
+#4. Retrieve 10 random jokes and display only the ones that have an odd/even ID
+
+# def retrieve_even(json_dict):
+#     if isinstance(json_dict,list):
+#         jokes_odd_dict=[]
+#         for joke in json_dict:
+#             if (joke['id'] % 2) == 0:
+#                 jokes_odd_dict.append(str(joke['id']) + '.'+ ' ' + joke['setup'] + '\n' + joke['punchline'] + '\n\n')
+#             else:
+#                     jokes_odd_dict.append(str(joke['id']) +' ' + 'ODD ID'+ '\n\n')
+#         return jokes_odd_dict
+
+
+def retrieve_jokes_by_id(joke_collection):
+    jokes_list = []
+    for joke in joke_collection:
+        if (joke['id'] % 2) == 0:
+            jokes_list.append(joke)
+    return format_json(jokes_list)
+
+
+#1.
+ print(get_random_joke())
+ print(get_jokes())
+ print(get_ten())
+ print (get_random_ten())
+ print (get_random_ten_by_type())
+
+
+#2.
+ var = format_output_jokes(get_random_ten_by_type())
+ for i in var:
+    print(i)
+
+#3.
+print(verify_jokes_type('programming'))
+
+#4
+
+
+
+
+
