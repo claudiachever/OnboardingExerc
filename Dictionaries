@@ -1,0 +1,179 @@
+# once  = {'a': 1, 'b': 2}
+# twice = {'a': 2, 'b': 4}
+# for key in once:
+#   print ("Once: %s" % once[key])
+#   print ("Twice: %s" % twice[key])
+#
+#
+# prices = {"banana": 4,"apple": 2,"orange": 1.5,"pear": 3}
+#
+# stock = {"banana": 6, "apple": 0, "orange": 32, "pear": 15}
+#
+# for food in prices:
+#   #print (food)
+#   print ("price: %s" % prices[food])
+#
+
+
+
+
+#
+# 1. Adauga o noua cheie in dictionar("b"), cu valoarea 5. Afiseaza dictionarul updatat
+# 2. Schimba valoarea cheii "a" din 1 in 7. Afiseaza dictionarul updatat
+# 3. Verifica daca valoarea cheii "c" este 3; daca este, afiseaza in consola un mesaj
+# 4. Itereaza prin cheile dictionarului si mareste valoarea fiecarei chei cu 1. Afiseaza dictionarul updatat
+# 5. Scrie o functie care primeste ca argument un dictionar si intoarce o lista de tupluri. Fiecare tuplu va contine
+# perechea de cheie-valoare
+
+
+new_dict = {"a": 1, "c": 3}
+
+
+#1.
+
+new_dict["b"] = 5
+print(new_dict)
+
+#2.
+new_dict["a"] = 7
+print(new_dict)
+
+#3
+
+print(new_dict["c"])
+value_of_c = new_dict["c"]
+if value_of_c == 3:
+    print("Value is correct : {} ".format(value_of_c))
+else:
+    print("Value found: {}, expected : {}".format(value_of_c, 3))
+
+#4
+
+for item in new_dict:
+    new_dict[item] +=1
+    print(item)
+
+print(new_dict.keys())
+
+print("Dictionary increased values are: " + str(new_dict))
+
+print(new_dict.items())
+
+#5
+
+fruits= {"banana": 6, "apple": 10, "avocado": 13 }
+
+def is_tuple(fruits):
+    return list(fruits.items())
+
+print(type(is_tuple(fruits)))
+
+
+
+#6. shopping_list = ["banana", "orange", "apple"]
+
+stock = {
+    "banana": 6,
+    "apple": 0,
+    "orange": 32,
+    "pear": 15
+}
+
+prices = {
+    "banana": 4,
+    "apple": 2,
+    "orange": 1.5,
+    "pear": 3
+}
+
+
+
+def compute_bill(food):
+    total = 0
+    for item in food:
+        if stock[item] > 0:
+            total += prices[item]
+            stock[item] -= 1
+    return total
+
+
+
+# 7.
+# for each student in your students list, print out that student‘s data, as follows:
+#
+# print the student‘s name
+# print the student‘s homework
+# print the student‘s quizzes
+# print the student‘s tests
+
+
+#8
+# Write a function average that takes a list of numbers and returns the average.
+#
+# Define a function called average that has one argument, numbers.
+# Inside that function, call the built-in sum() function with the numbers list as a parameter. Store the result in a variable called total.
+# Like the example above, use float() to convert total and store the result in total.
+# Divide total by the length of the numbers list. Use the built-in len() function to calculate that.
+# Return that result.
+
+lloyd = {
+    "name": "Lloyd",
+    "homework": [90.0, 97.0, 75.0, 92.0],
+    "quizzes": [88.0, 40.0, 94.0],
+    "tests": [75.0, 90.0]
+}
+alice = {
+    "name": "Alice",
+    "homework": [100.0, 92.0, 98.0, 100.0],
+    "quizzes": [82.0, 83.0, 91.0],
+    "tests": [89.0, 97.0]
+}
+tyler = {
+    "name": "Tyler",
+    "homework": [0.0, 87.0, 75.0, 22.0],
+    "quizzes": [0.0, 75.0, 78.0],
+    "tests": [100.0, 100.0]
+}
+
+
+def average(numbers):
+    total = sum(numbers)
+    total = float(total)
+    return total / len(numbers)
+
+
+def get_average(student):
+    homework = average(student["homework"])
+    quizzes = average(student["quizzes"])
+    tests = average(student["tests"])
+
+    total = homework * 0.1 + quizzes * 0.3 + tests * 0.6
+    return total
+
+
+def get_letter_grade(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    elif score >= 60:
+        return "D"
+    else:
+        return "F"
+
+
+def get_class_average(class_list):
+    results = []
+    for student in class_list:
+        results.append(get_average(student))
+    return average(results)
+
+
+students = [alice, lloyd, tyler]
+
+print(get_average(alice))
+print(get_letter_grade(get_average(alice)))
+print(get_class_average(students))
+print(get_letter_grade(get_class_average(students)))
