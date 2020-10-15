@@ -1,0 +1,110 @@
+# 1. Declara o variabila 'x' care sa fie o lista goala
+#2. Adauga in lista numerele de la 5 la 10
+#3. Parcurge lista si afiseaza pentru fiecare numar daca este par sau impar. Ar trebui sa se afiseze:
+    5 este impar
+    6 este par
+    ...
+    10 este par
+#4. Adauga la finalul listei numarul 100
+#5. Afiseaza numarul de elemente ale listei
+#6. Salveaza intr-o variabila numarul de elemente ale listei. Scoate numarul 5 din lista. Verifica faptul ca lungimea 
+listei a scazut cu unu si printeaza un mesaj daca totul a mers corect
+
+
+
+
+ 1.
+ x =[]
+
+ 2.
+  adding = x.extend([5,6,7,8,9,10])
+ x.extend(range(5,11))
+ print(x)
+
+ for number in range(5,11):
+     x.append(number)
+
+ print(x)
+
+
+ 3.
+
+ for number in x:
+     if number % 2 == 0:
+         print('Numarul {} este par'.format(number))
+     else:
+         print('Numarul {} este impar'.format(number))
+
+  for number in x:
+      if number % 2 == 0:
+          print('Numarul %d este par' %(number))
+      else:
+          print('Numarul %d este impar' %(number))
+
+
+ 4
+
+ x.append(100)
+ print(x)
+
+
+ 5.
+ print(len(x))
+
+ 6
+
+ lungime = len(x)
+ x.remove(5)
+ new_lungime= len(x)
+
+ if (new_lungime) == (lungime - 1):
+     print("Everything works fine")
+ else:
+     print("Error: lungimea este aceeasi")
+
+ myfamily = {
+   "child1" : {
+     "name" : "Emil",
+     "year" : 2004
+   },
+   "child2" : {
+     "name" : "Tobias",
+     "year" : 2007
+   },
+   "child3" : {
+     "name" : "Linus",
+     "year" : 2011
+   }
+ }
+
+
+ print(myfamily.pop("child1", None))
+ 
+  print (myfamily)
+
+ del myfamily["child1"]
+ print(myfamily)
+
+
+
+def count_small(numbers):
+  total = 0
+  for n in numbers:
+    if n < 10:
+      total = total + 1
+  return total
+
+lotto = [4, 8, 15, 16, 23, 42]
+small = count_small(lotto)
+print (small)
+
+
+
+def fizz_count(x):
+  count = 0
+  for item in x:
+    if item == "fizz":
+      count = count + 1
+  return count
+
+print(fizz_count(["fizz","cat","fizz"]))
