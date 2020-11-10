@@ -1,0 +1,15 @@
+response1 = CloudCtx()
+response2 = CloudCtx()
+response3 = CloudCtx()
+
+
+
+response1.retrieve_data_from_resp(response_obj["imdata"][0])
+response2.retrieve_data_from_resp(response_obj["imdata"][1])
+response3.retrieve_data_from_resp(response_obj["imdata"][2])
+
+response1.display_for_all()
+print()
+response2.display_for_all()
+print()
+response3.display_for_all()
