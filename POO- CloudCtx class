@@ -1,0 +1,64 @@
+from HealthInst import HealthInst
+
+class CloudCtx(object):
+    #name = ["imdata"][0]["hcloudCTx"]["attributes"]["name"]
+    #tenant_name = ["imdata"][0]["hcloudCTx"]["attributes"]["tenantName"]
+    #description = ["imdata"][0]["hcloudCTx"]["attributes"]["description"]
+    #ctx_profile_name = ["imdata"][0]["hcloudCTx"]["attributes"]["ctxProfileName"]
+    #name_alias = ["imdata"][0]["hcloudCTx"]["attributes"]["nameAlias"]
+
+    def __init__(self):
+        self.name = None
+        self.tenant_name = None
+        self.description = None
+        self.ctx_profile_name = None
+        self.name_alias = None
+        self.health_inst = HealthInst()
+        # self.health_inst_list = []
+
+    def retrieve_data_from_resp(self, dictionary):
+        common_part_attributes = dictionary["hcloudCtx"]["attributes"]
+        self.name = common_part_attributes["name"]
+        self.tenant_name = common_part_attributes["tenantName"]
+        self.description = common_part_attributes["description"]
+        self.ctx_profile_name = common_part_attributes["ctxProfileName"]
+        self.name_alias = common_part_attributes["nameAlias"]
+        self.health_inst.retrieve_data_from_children(dictionary["hcloudCtx"]["children"][0])
+        # common_part_children = dictionary["hcloudCtx"]["children"]
+        # for child in common_part_children:
+        #     child_health_inst = HealthInst()
+        #     child_health_inst.retrieve_from_HealthInst(child)
+        #     self.health_inst_list.append(child_health_inst)
+
+
+
+    def display_info(self):
+       print ("Name is {0} \n"
+              "Tenant name is {1} \n"
+              "Description is {2} \n"
+              "CTX profile name is {3} \n"
+              "Name alias is {4} ".format(self.name, self.tenant_name, self.description, self.ctx_profile_name, self.format_value(self.name_alias)))
+
+
+    def format_value(self, value):
+        if value == "" :
+            return "-"
+        else:
+            return value
+
+
+    def display_for_all(self):
+        displayed_health = self.health_inst.displayed_health()
+        print("Name is : {0}\n"
+              "Tenant name is: {1}\n"
+              "Displayed health of children is: {2}".format(self.name, self.tenant_name, displayed_health))
+
+
+
+
+
+
+
+
+
+
