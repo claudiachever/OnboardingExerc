@@ -1,0 +1,21 @@
+class HealthInst(object):
+# current_health = ["children"][0]["healthInst"]["attributes"]["cur"]
+# max_sev = ["children"][0]["healthInst"]["attributes"]["maxSev"]
+
+    def __init__(self):
+        self.current_health = None
+        self.max_sev = None
+
+
+    def retrieve_data_from_children(self, dictionary):
+        common_part_children = dictionary["healthInst"]["attributes"]
+        self.current_health = common_part_children["cur"]
+        self.max_sev = common_part_children["maxSev"]
+
+
+    def displayed_health(self):
+        if int(self.current_health) == 100:
+            print('Healthy')
+        elif int(self.current_health) < 100:
+            print("Unhealthy")
+
