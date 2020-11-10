@@ -1,4 +1,4 @@
-class HealthInst(object):
+class HealthInst():
 # current_health = ["children"][0]["healthInst"]["attributes"]["cur"]
 # max_sev = ["children"][0]["healthInst"]["attributes"]["maxSev"]
 
