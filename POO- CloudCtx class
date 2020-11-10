@@ -1,6 +1,6 @@
 from HealthInst import HealthInst
 
-class CloudCtx(object):
+class CloudCtx():
     #name = ["imdata"][0]["hcloudCTx"]["attributes"]["name"]
     #tenant_name = ["imdata"][0]["hcloudCTx"]["attributes"]["tenantName"]
     #description = ["imdata"][0]["hcloudCTx"]["attributes"]["description"]
