@@ -13,3 +13,19 @@ print()
 response2.display_for_all()
 print()
 response3.display_for_all()
+
+
+===============================================================================
+
+
+manager = ManagerCloudCtx()
+
+manager.retrieve_data_from_all_cloud_ctx(response_obj)
+manager2.retrieve_data_from_all_cloud_ctx(response_obj)
+manager.display_all_cloud_ctx()
+manager2.display_all_cloud_ctx()
+print("number of discovered cloud_ctx is:" + str(ManagerCloudCtx.count))
+manager.display_sorted_health_from_all()
+manager.display_recently_to_last_modified()
+
+
