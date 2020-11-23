@@ -1,0 +1,45 @@
+from CloudCTX import CloudCtx
+from datetime import *
+
+class ManagerCloudCtx():
+    count = 0
+
+    def __init__(self):
+        self.cloud_ctx_list = []
+
+
+    def retrieve_data_from_all_cloud_ctx(self, dictionary):
+        common_part_cloud_ctx = dictionary["imdata"]
+        for ctx in common_part_cloud_ctx:
+            cloud_ctx = CloudCtx()
+            cloud_ctx.retrieve_data_from_resp(ctx)
+            cloud_ctx.retrieve_data_from_all_children(ctx)
+            self.cloud_ctx_list.append(cloud_ctx)
+            ManagerCloudCtx.count += 1
+
+
+    def display_all_cloud_ctx(self):
+        for ctx_obj in self.cloud_ctx_list:
+            ctx_obj.display_info()
+
+
+    def display_sorted_health_from_all(self):
+        health_list = []
+        for cloud_ctx in self.cloud_ctx_list:
+            for health_child in cloud_ctx.get_health_child_list():
+                health_list.append(int(health_child.current_health))
+        print(sorted(health_list))
+
+
+
+    def display_recently_to_last_modified(self):
+        ordered_ctx_list = sorted(self.cloud_ctx_list, key=lambda cloud_ctx: datetime.fromisoformat(cloud_ctx.last_modified), reverse=True)
+        for ordered in ordered_ctx_list:
+            print(ordered.name + " " + ordered.last_modified)
+            print()
+
+
+
+
+
+
