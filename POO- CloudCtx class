@@ -1,20 +1,18 @@
 from HealthInst import HealthInst
+from datetime import *
 
 class CloudCtx():
-    #name = ["imdata"][0]["hcloudCTx"]["attributes"]["name"]
-    #tenant_name = ["imdata"][0]["hcloudCTx"]["attributes"]["tenantName"]
-    #description = ["imdata"][0]["hcloudCTx"]["attributes"]["description"]
-    #ctx_profile_name = ["imdata"][0]["hcloudCTx"]["attributes"]["ctxProfileName"]
-    #name_alias = ["imdata"][0]["hcloudCTx"]["attributes"]["nameAlias"]
 
     def __init__(self):
+
         self.name = None
         self.tenant_name = None
         self.description = None
         self.ctx_profile_name = None
         self.name_alias = None
-        self.health_inst = HealthInst()
-        # self.health_inst_list = []
+        self.health_inst_list = []
+        #self.health_inst = HealthInst()
+
 
     def retrieve_data_from_resp(self, dictionary):
         common_part_attributes = dictionary["hcloudCtx"]["attributes"]
@@ -23,21 +21,39 @@ class CloudCtx():
         self.description = common_part_attributes["description"]
         self.ctx_profile_name = common_part_attributes["ctxProfileName"]
         self.name_alias = common_part_attributes["nameAlias"]
-        self.health_inst.retrieve_data_from_children(dictionary["hcloudCtx"]["children"][0])
-        # common_part_children = dictionary["hcloudCtx"]["children"]
-        # for child in common_part_children:
-        #     child_health_inst = HealthInst()
-        #     child_health_inst.retrieve_from_HealthInst(child)
-        #     self.health_inst_list.append(child_health_inst)
+        self.last_modified = common_part_attributes["modTs"]
+        #self.health_inst.retrieve_data_from_children(dictionary["hcloudCtx"]["children"][0])
 
+
+    def retrieve_data_from_all_children(self, dictionary):
+        common_part_children = dictionary["hcloudCtx"]["children"]
+        for child in common_part_children:
+            child_health_inst = HealthInst()
+            child_health_inst.retrieve_data_from_children(child)
+            self.health_inst_list.append(child_health_inst)
 
 
     def display_info(self):
-       print ("Name is {0} \n"
-              "Tenant name is {1} \n"
-              "Description is {2} \n"
-              "CTX profile name is {3} \n"
-              "Name alias is {4} ".format(self.name, self.tenant_name, self.description, self.ctx_profile_name, self.format_value(self.name_alias)))
+        self.name= self.format_value(self.name)
+        self.tenant_name = self.format_value(self.tenant_name)
+        self.description = self.format_value(self.description)
+        self.ctx_profile_name = self.format_value(self.ctx_profile_name)
+        self.name_alias = self.format_value(self.name_alias)
+        self.formatted_last_modified = self.format_date(self.last_modified)
+        print ("Name is: {0} \n"
+              "Tenant name is: {1} \n"
+              "Description is: {2} \n"
+              "CTX profile name is: {3} \n"
+              "Name alias is: {4}\n"
+              "formatted_last_modified:{5}".format(self.name, self.tenant_name, self.description, self.ctx_profile_name,
+                                         self.name_alias, self.formatted_last_modified))
+        if len(self.health_inst_list) == 0:
+            print("Displayed health is : 0")
+        else:
+            for health_value in self.health_inst_list:
+                print("Displayed health is: " + self.format_value(health_value.current_health))
+        print()
+
 
 
     def format_value(self, value):
@@ -47,12 +63,13 @@ class CloudCtx():
             return value
 
 
-    def display_for_all(self):
-        displayed_health = self.health_inst.displayed_health()
-        print("Name is : {0}\n"
-              "Tenant name is: {1}\n"
-              "Displayed health of children is: {2}".format(self.name, self.tenant_name, displayed_health))
+    def format_date(self, date):
+        date_formatted = datetime.fromisoformat(date)
+        return date_formatted.strftime("%d-%m-%Y %I:%M:%S %p")
 
+
+    def get_health_child_list(self):
+        return self.health_inst_list
 
 
 
